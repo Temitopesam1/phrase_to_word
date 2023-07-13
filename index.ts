@@ -26,12 +26,15 @@ import axios from 'axios';
     }
 
     // Get words by a specific phrase to demonstrate req.params
-    // > try it {{host}}/words/:the_phrase
+    // > try it {{host}}/getword/:the_phrase
     app.get( "/getword/:phrase", async ( req: Request, res: Response ) => {
-        const { phrase } = req.params;
-        const result = await dictAPI(phrase);
-
-        res.status(200).json({'Result': result});
+		try{
+        	const { phrase } = req.params;
+        	const result = await dictAPI(phrase);
+        	res.status(200).json({'Result': result});
+		} catch (err: Error){
+			res.status(200).json({'Unable to fetch data': err });
+		}
 	
     });
   
